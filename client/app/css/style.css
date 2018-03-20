@@ -1,0 +1,43 @@
+.children {
+	min-height: 500px;
+	margin: 20px;
+}
+#app{
+	height: auto;
+	width: 100%;
+	background: #efe6e6;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+html{
+	margin: 0px;
+	padding: 0px;
+	background: #ece4e1;
+}
+.imagewraper {
+	/* height: 476px; */
+	width: 60%;
+	padding: 20px;
+	margin: 0px auto;
+}
+.ansboxeswrapper {width: 50%;margin: 0px auto;}
+.alphabetbuttons {width: 80%;height: 100px;margin: 10px auto;}
+.button {/* height: 44px; */padding: 14px;float:  left;margin: 10px;}
+.image {
+	float: left;
+	width: 45%;
+	border: 1px solid blueviolet;
+	/* height: 100%; */
+}
+.ansbox {display:  inline-block;width: 50px;height: 50px;border:  1px solid;margin-right: 10px;font-size: 3em;padding: 5px;text-align:  center;}
+.hintbox {
+    float: right;
+    z-index: 9999999;
+    cursor:  pointer;
+    position: static;
+}
+.hintbutton {padding:  10px;width: 100px;background: #a3afa2;border: 0px;font-size: 18px;/* cursor:  pointer; *//* z-index: 999999; */}
+.hint {
+	display: none;
+}

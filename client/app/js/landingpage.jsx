@@ -18,8 +18,12 @@ export default class landingpage extends React.Component {
 	          <meta itemprop="name" content="react basic setup" />
 	          <meta itemprop="description" content="This is a project named react basic setup" />
 	        </Helmet>
+	        <h2 style={{textAlign: 'center'}}> Four Pictures One word </h2>
 			{/*here render its child component*/}
-	        	{this.props.children}
+				<div className="children">
+	        		{this.props.children}
+				</div>
+	        <div style={{textAlign: 'right'}}>Developed by- Dev bohre</div>
 	      </div>
 	    );
   	}

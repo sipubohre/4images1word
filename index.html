@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Vidya Ashram</title>
+    <title>Sample App Programme</title>
     <meta charset="utf-8">
     <meta charset="utf-8" />
 	  <meta name="theme-color" content="#fdd600" />
@@ -9,56 +9,13 @@
   	<meta name="robots" content="index">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-signin-client_id" content="658916302546-gaph316r7lodfjklmvbp7orkmp75btig.apps.googleusercontent.com">
-    <link type="text/css" rel="stylesheet" href="/client/app/css/icons.css" />
-    <link type="text/css" rel="stylesheet" href="/client/app/css/layout.css" />
-    <link type="text/css" rel="stylesheet" href="/client/app/css/elements.css" />
-    <link type="text/css" rel="stylesheet" href="/client/app/css/plugins.css" />
+    <link type="text/css" rel="stylesheet" href="/client/app/css/style.css" />
     <link type="text/css" rel="stylesheet" href="/client/app/css/slick.css" />
-    <link type="text/css" rel="stylesheet" href="/client/app/css/responsive.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Slab:700" rel="stylesheet">
   </head>
   <body>
     <div id="app" />
     <script src="bundle/bundle.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : 1853158191382072,
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v2.11'
-        });
-        FB.AppEvents.logPageView();  
-      };
-
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <!-- <script>
-      function onSuccess(googleUser) {
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-      }
-      function onFailure(error) {
-        console.log(error);
-      }
-      function renderButton() {
-        gapi.signin2.render('my-signin2', {
-          'scope': 'profile email',
-          'width': 240,
-          'height': 50,
-          'longtitle': true,
-          'theme': 'dark',
-          'onsuccess': onSuccess,
-          'onfailure': onFailure
-        });
-      }
-    </script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
   </body>
 </html>
