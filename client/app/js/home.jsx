@@ -17,6 +17,8 @@ export default class home extends React.Component {
         datajson: []
       };
     this.showhintbox = this.showhintbox.bind(this)
+    this.addletterhandler = this.addletterhandler.bind(this)
+    this.removeallselecthandler = this.removeallselecthandler.bind(this)
   }
 
   componentDidMount() {
@@ -24,17 +26,26 @@ export default class home extends React.Component {
       {
         images: [imageurl+'/brain1.png', imageurl+'/brain2.png', imageurl+'/brain3.png', imageurl+'/brain4.jpg'],
         hint: 'brain',
-        noOfLetters: 5
+        noOfLetters: 5,
+        selectedletters: [],
+        alphabets: ['a', 'y', 'w', 'r', 'k', 'b', 'u', 'n', 's', 'i'],
+        result: false
       },
       {
         images: [imageurl+'/money1.png', imageurl+'/money2.jpg', imageurl+'/money3.png', imageurl+'/money4.jpg'],
         hint: 'money',
-        noOfLetters: 5
+        noOfLetters: 5,
+        selectedletters: [],
+        alphabets: ['w', 'y', 'a', 'l', 'm', 'n', 'u', 'o', 's', 'e'],
+        result: false
       },
       {
         images: [imageurl+'/tech1.jpg', imageurl+'/tech2.jpg', imageurl+'/tech3.jpg', imageurl+'/tech4.jpg'],
         hint: 'tech',
-        noOfLetters: 4
+        noOfLetters: 4,
+        selectedletters: [],
+        alphabets: ['a', 'y', 't', 'r', 'h', 'b', 'e', 'n', 's', 'c'],
+        result: false
       },
     ]
     this.setState({
@@ -47,6 +58,49 @@ export default class home extends React.Component {
     var hintboxid = 'hint_'+id
     console.log("id and hintboxid", id, hintboxid)
     $('#'+hintboxid).show();
+  }
+
+  addletterhandler(event) {
+    var text = event.target.innerHTML
+    var data = event.target.getAttribute('data-index')
+    var datajson = this.state.datajson
+    console.log("innerhtml of button", text, data)
+    var updatedjson = datajson.map(function(i, index) {
+      if(index == data) {
+        i.selectedletters.push(text);
+      }
+      if(i.selectedletters.length == i.noOfLetters) {
+
+        var word=""
+        i.selectedletters.map(function(j) {
+          word = word+j;
+        })
+        if(word == i.hint){
+          i.result = true;
+        }
+        else {
+          $('#'+index).find('.button').attr('disabled', true);
+          $('#'+index).find('.wrongguess').show();
+        }
+      }
+      return(i);
+    })
+    this.setState({datajson: updatedjson})
+  }
+
+  removeallselecthandler(event) {
+    var data = event.target.getAttribute('data-index')
+    var datajson = this.state.datajson
+    console.log("innerhtml of button", data)
+    var updatedjson = datajson.map(function(i, index) {
+      if(index == data) {
+        i.selectedletters = [];
+        $('#'+index).find('.button').attr('disabled', false);
+        $('#'+index).find('.wrongguess').hide();
+      }
+      return(i);
+    })
+    this.setState({datajson: updatedjson})
   }
 
   render() {
@@ -62,62 +116,56 @@ export default class home extends React.Component {
     var data
     if(this.state.datajson.length>0) {
       data = this.state.datajson.map(function(i, index) {
-        var images = i.images.map(function(j, imageindex) {
+        if(i.result == false) {
+          var images = i.images.map(function(j, imageindex) {
+            return (
+              <div key={imageindex} className="image">
+                <img src={j} width="150" height="150"/>
+              </div>
+            );
+          })
+          var ansboxes=[]
+          for(var k=0; k<i.noOfLetters; k++) {
+            var box= <div className="ansbox" key={k} >{i.selectedletters[k] ? i.selectedletters[k] : ''}</div>
+            ansboxes.push(box)
+          }
+          var filteredalphabets = i.alphabets.filter(function(a) {
+              if(i.selectedletters.indexOf(a) == -1) {
+                return(a);
+              }
+          })
           return (
-            <div key={imageindex} className="image">
-              <img src={j} width="150" height="150"/>
+            <div key={index} id={index}>
+              <div className="imagewraper">
+                {images}
+              </div>
+              <div className="ansboxeswrapper">
+                {ansboxes.map(function(l) {
+                  return(l);
+                })}
+                <button className="hintbutton" type="button" onClick={this.removeallselecthandler} data-index={index}> Clear </button>
+              </div>
+              <div className="wrongguess" style={{display: 'none'}}>you guessed it wrong. Please clear and try again!</div>
+              <div className="alphabetbuttons">
+                {filteredalphabets.map(function(l, lindex) {
+                    return(<button key={lindex} className="button" type="button" data-index={index} onClick={this.addletterhandler}>{l}</button>);
+                }, this)}
+              </div>
+              <div className="hintbox">
+                <button className="hintbutton" type="button" id={"hintbuton_"+index} onClick={this.showhintbox}>Hint</button>
+                <div className="hint" id={"hint_"+index}>{i.hint}</div>
+              </div>
             </div>
           );
-        })
-        var ansboxes=[]
-        for(var k=0; k<i.noOfLetters; k++) {
-          var box= <div className="ansbox" key={k}></div>
-          ansboxes.push(box)
         }
-        return (
-          <div key={index}>
-            <div className="imagewraper">
-              {images}
+        else {
+          return(
+            <div className="successdiv" key={index}>
+              <img src={imageurl+'/success.png'} width="150" height="150" />
+              <span>Well played!! you guessed it right.</span>
             </div>
-            <div className="ansboxeswrapper">
-              {ansboxes.map(function(l) {
-                return(l);
-              })}
-            </div>
-            <div className="alphabetbuttons">
-              <button className="button" type="button">a</button>
-              <button className="button" type="button">b</button>
-              <button className="button" type="button">c</button>
-              <button className="button" type="button">d</button>
-              <button className="button" type="button">e</button>
-              <button className="button" type="button">f</button>
-              <button className="button" type="button">g</button>
-              <button className="button" type="button">h</button>
-              <button className="button" type="button">i</button>
-              <button className="button" type="button">j</button>
-              <button className="button" type="button">k</button>
-              <button className="button" type="button">l</button>
-              <button className="button" type="button">m</button>
-              <button className="button" type="button">n</button>
-              <button className="button" type="button">o</button>
-              <button className="button" type="button">p</button>
-              <button className="button" type="button">q</button>
-              <button className="button" type="button">r</button>
-              <button className="button" type="button">s</button>
-              <button className="button" type="button">t</button>
-              <button className="button" type="button">u</button>
-              <button className="button" type="button">v</button>
-              <button className="button" type="button">w</button>
-              <button className="button" type="button">x</button>
-              <button className="button" type="button">y</button>
-              <button className="button" type="button">z</button>
-            </div>
-            <div className="hintbox">
-              <button className="hintbutton" type="button" id={"hintbuton_"+index} onClick={this.showhintbox}>Hint</button>
-              <div className="hint" id={"hint_"+index}>{i.hint}</div>
-            </div>
-          </div>
-        );
+          );
+        }
       },this)
     }
     var apierr
