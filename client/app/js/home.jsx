@@ -107,7 +107,7 @@ export default class home extends React.Component {
     var settings = {
       dots: true,
       arrows: true,
-      infinite: true,
+      infinite: false,
       autoplay: false,
       speed: 2000,
       slidesToShow: 1,
